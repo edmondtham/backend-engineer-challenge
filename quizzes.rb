@@ -14,7 +14,7 @@
     expected_answer = "grant me the s3r3nity to accept the things i cannot change the c0urage to change the things i can and the w1sd0m to know the difference"
 
     def sanitize_paragraph(paragraph)
-      # your code
+        return paragraph.downcase.gsub(/[^0-9a-z ]/, '')
     end
     
     puts "Challenge 1 completed: #{sanitize_paragraph(paragraph) == expected_answer}"
@@ -37,7 +37,13 @@
     ]
 
     def get_state(address)
-      # your code
+        thing_to_find = ["SARAWAK", "JOHOR", "TERENGGANU", "SELANGOR"]
+        thing_to_find.each do |n| 
+            if address.upcase.include?(n)
+                return n
+            end
+        end
+        return "null"
     end
 
     # passing validation
@@ -55,7 +61,35 @@
     expected_answer = "MULTIPOLYGON (((30 20, 45 40, 10 40, 30 20)), ((15 5, 40 10, 10 20, 5 10, 15 5)))"
 
     def coord_to_wkt(coordinate_pair)
-      # your code
+        str = "MULTIPOLYGON "
+        str+="("
+        coordinate_pair.each {|a|
+            str+="("
+            if a.length > 0
+                a.each { |b| 
+                str+="("
+                if b.length > 0
+                    b.each { |c| 
+                    if c.length > 0
+                        c.each { |d|
+                        str+=d.to_s
+                        str+=" "
+                        }
+                    end
+                    str = str.chop
+                    str+=", "
+                    }
+                end
+                str = str.chop
+                str = str.chop
+                str+=")"
+                }
+            end
+            str+="), "
+            }
+        str = str.chop
+        str = str.chop
+        str+=")"
     end
 
     # passing validation
@@ -70,7 +104,16 @@
     Bonus points for the elegant recursive solution!'
 
     def is_palindrome?(word)
-      
+        reverse_word = []
+        word = word.split("")
+        word.each do |c|
+          reverse_word.unshift(c)
+        end
+          if reverse_word==word
+            return true
+        else
+          return false
+        end
     end
 
     # passing validation
